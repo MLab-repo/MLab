@@ -36,16 +36,17 @@ if isempty(in.plugins)
         
         % Ask for confirmation
         clc
-        fprintf('You are going to uninstall MLab.\n');
+        ML.CW.line('[\b~b{MLab uninstallation}]\b', 'marker', '-')
+        fprintf('\nYou are about to <strong>uninstall</strong> [\bMLab]\b on this computer.\n\n');
         fprintf('Please keep in mind that <strong>this operation is not reversible</strong>.\n\n');
-        fprintf('Please choose:\n');
-        fprintf('\t[u] Uninstall MLab and all configuration files\n');
-        fprintf('\t[k] Uninstall MLab but keep configuration files\n');
-        fprintf('\t[Enter] Quit the uninstaller\n');
+        fprintf('Please choose an action:\n\n');
+        fprintf('\t[[\b<strong>u</strong>]\b] Uninstall MLab and all configuration files\n');
+        fprintf('\t[[\b<strong>k</strong>]\b] Uninstall MLab but keep configuration files\n');
+        fprintf('\t[[\b<strong>Enter</strong>]\b] Quit the uninstaller\n\n');
         s = input('?> ', 's');
         
         if isempty(s)
-            fprintf('Uninstallation aborted.\n');
+            fprintf('\n[\bUninstallation aborted]\b.\n\n');
             return
         end
         if ~ismember(s, {'u', 'k'}), continue; end
@@ -106,4 +107,4 @@ rehash toolboxcache
 
 % --- Bye bye message
 fprintf('\nMLab is now uninstalled.\n');
-fprintf('Bye bye !\n');
+fprintf('[\bBye bye !]\b\n');
