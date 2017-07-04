@@ -14,8 +14,6 @@ function uninstall(varargin)
 %
 %   More on <a href="matlab:ML.doc('ML.uninstall');">ML.doc</a>
 
-% % % Bye bye message
-
 % --- Inputs
 in = ML.Input;
 in.plugins({}) = @(x) ischar(x) || iscellstring(x);
@@ -78,6 +76,7 @@ if isempty(in.plugins)
             end
                 
         end
+        fprintf(' %.2f sec\n', toc);
         
         break
     end
@@ -106,5 +105,5 @@ end
 rehash toolboxcache
 
 % --- Bye bye message
-fprintf('MLab is now uninstalled.\n');
+fprintf('\nMLab is now uninstalled.\n');
 fprintf('Bye bye !\n');
