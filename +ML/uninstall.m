@@ -64,14 +64,6 @@ if isempty(in.plugins)
         end
         if ~ismember(s, {'u', 'k'}), continue; end
         
-        % Remove MLab
-        fprintf('Removing MLab ...'); tic
-        warning off
-        rmpath(genpath(config.path));
-        rmdir(config.path, 's');
-        warning on
-        fprintf(' %.2f sec\n', toc);
-        
         % Remove startup files
         fprintf('Removing startup files ...'); tic
         fname_startup_MLab = fullfile(matlabroot, 'toolbox', 'local', 'startup_MLab.m');
@@ -90,6 +82,14 @@ if isempty(in.plugins)
             end
                 
         end
+        fprintf(' %.2f sec\n', toc);
+        
+        % Remove MLab
+        fprintf('Removing MLab ...'); tic
+        warning off
+        rmpath(genpath(config.path));
+        rmdir(config.path, 's');
+        warning on
         fprintf(' %.2f sec\n', toc);
         
         break
@@ -120,4 +120,8 @@ rehash toolboxcache
 
 % --- Bye bye message
 fprintf('\nMLab is now uninstalled.\n');
-fprintf('[\bBye bye !]\b\n');
+if usejava('desktop')
+    fprintf('[\bBye bye !]\b\n');
+else
+    fprintf('\033[33mBye bye !\033[0m\n');
+end
