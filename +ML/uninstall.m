@@ -36,13 +36,26 @@ if isempty(in.plugins)
         
         % Ask for confirmation
         clc
-        ML.CW.line('[\b~b{MLab uninstallation}]\b', 'marker', '-')
-        fprintf('\nYou are about to <strong>uninstall</strong> [\bMLab]\b on this computer.\n\n');
-        fprintf('Please keep in mind that <strong>this operation is not reversible</strong>.\n\n');
-        fprintf('Please choose an action:\n\n');
-        fprintf('\t[[\b<strong>u</strong>]\b] Uninstall MLab and all configuration files\n');
-        fprintf('\t[[\b<strong>k</strong>]\b] Uninstall MLab but keep configuration files\n');
-        fprintf('\t[[\b<strong>Enter</strong>]\b] Quit the uninstaller\n\n');
+        
+        cws = get(0,'CommandWindowSize');
+        if usejava('desktop')
+            fprintf('\n--- [\b<strong>MLab uninstall</strong>]\b %s\n\n', repmat('-', [1 cws(1)-22]));
+            fprintf('You are about to <strong>uninstall</strong> [\bMLab]\b on this computer.\n\n');
+            fprintf('Please keep in mind that <strong>this operation is not reversible</strong>.\n\n');
+            fprintf('Please choose an action:\n\n');
+            fprintf('\t[[\b<strong>u</strong>]\b] Uninstall MLab and all configuration files\n');
+            fprintf('\t[[\b<strong>k</strong>]\b] Uninstall MLab but keep configuration files\n');
+            fprintf('\t[[\b<strong>Enter</strong>]\b] Quit the uninstaller\n\n');
+        else
+            fprintf('\n--- \033[1;33;40mMLab uninstall\033[0m %s\n\n', repmat('-', [1 cws(1)-22]));
+            fprintf('You are about to \033[1muninstall\033[0m \033[1;33;40mMLab\033[0m on this computer.\n\n');
+            fprintf('Please keep in mind that \033[1mthis operation is not reversible\033[0m.\n\n');
+            fprintf('Please choose an action:\n\n');
+            fprintf('\t[\033[1;33;40mu\033[0m] Uninstall MLab and all configuration files\n');
+            fprintf('\t[\033[1;33;40mk\033[0m] Uninstall MLab but keep configuration files\n');
+            fprintf('\t[\033[1;33;40mEnter\033[0m] Quit the uninstaller\n\n');
+        end
+        
         s = input('?> ', 's');
         
         if isempty(s)
