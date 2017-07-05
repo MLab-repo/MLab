@@ -59,7 +59,12 @@ if isempty(in.plugins)
         s = input('?> ', 's');
         
         if isempty(s)
-            fprintf('\n[\bUninstallation aborted]\b.\n\n');
+            if usejava('desktop')
+                fprintf('\n[\bUninstallation aborted]\b.\n\n');
+            else
+                fprintf('\n\033[33mUninstallation aborted\033[0m.\n\n');
+            end
+            
             return
         end
         if ~ismember(s, {'u', 'k'}), continue; end
