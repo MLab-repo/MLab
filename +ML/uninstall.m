@@ -153,12 +153,16 @@ end
 
 if strcmp(computer, 'PCWIN64')
     if usejava('desktop')
-        fprintf('<strong>To complete uninstall on Windows system<strong>\n');
+        fprintf('\n<strong>Note: To complete uninstall on Windows system</strong>\n');
+        fprintf('The folder %s.git cannot be removed while Matlab is open.\n', config.path);
+        fprintf('Please exit Matlab and delete manually the folder:\n\n\t<strong>%s</strong>\n\n', config.path);
+        fprintf('MLab will then be totally unistalled.\n');
     else
         fprintf('\033[1mTo complete uninstall on Windows system\033[0m\n');
+        fprintf('The folder %s.git cannot be removed while Matlab is open.\n', config.path);
+        fprintf('Please exit Matlab and delete manually the folder:\n\n\t\033[1m%s\033[0m\n\n', config.path);
+        fprintf('MLab will then be totally unistalled.\n');
     end
-    fprintf('The folder %s.git cannot be remove while Matlab is open.\n', config.path);
-    fprintf('Please exit Matlab and delete manually the folder\n%s\n\n', config.path);
-    fprintf('MLab will then be totally unistalled.\n');
+    
     
 end
