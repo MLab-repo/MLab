@@ -30,7 +30,21 @@ config = ML.config;
 
 if isempty(in.plugins)
     
-    % --- Remove MLab
+    % --- Remove MLab -----------------------------------------------------
+    
+    % --- Checks
+
+    % Administrator privileges on Windows
+    if strcmp(computer, 'PCWIN64')
+        wi = System.Security.Principal.WindowsIdentity.GetCurrent();
+        wp = System.Security.Principal.WindowsPrincipal(wi);
+        if ~wp.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator)
+            warning('MLab:Priviledges', 'You need administrator priviledges to uninstall MLab on Windows.\nPlease restart Matlab as an administor and restart the uninstall process.');
+            return;
+        end
+    end
+    
+    % --- User input
     
     while true
         
@@ -69,6 +83,8 @@ if isempty(in.plugins)
         end
         if ~ismember(s, {'u', 'k'}), continue; end
         
+        % --- Uninstallation
+        
         % Remove startup files
         fprintf('Removing startup files ...'); tic
         fname_startup_MLab = fullfile(matlabroot, 'toolbox', 'local', 'startup_MLab.m');
@@ -92,8 +108,11 @@ if isempty(in.plugins)
         % Remove MLab
         fprintf('Removing MLab ...'); tic
         warning off
-        rmpath(genpath(config.path));
-        rmdir(config.path, 's');
+        try
+            rmpath(genpath(config.path));
+            rmdir(config.path, 's');
+        catch
+        end
         warning on
         fprintf(' %.2f sec\n', toc);
         
@@ -124,9 +143,22 @@ end
 rehash toolboxcache
 
 % --- Bye bye message
+
 fprintf('\nMLab is now uninstalled.\n');
 if usejava('desktop')
     fprintf('[\bBye bye !]\b\n');
 else
     fprintf('\033[33mBye bye !\033[0m\n');
+end
+
+if strcmp(computer, 'PCWIN64')
+    if usejava('desktop')
+        fprintf('<strong>To complete uninstall on Windows system<strong>\n');
+    else
+        fprintf('\033[1mTo complete uninstall on Windows system\033[0m\n');
+    end
+    fprintf('The folder %s.git cannot be remove while Matlab is open.\n', config.path);
+    fprintf('Please exit Matlab and delete manually the folder\n%s\n\n', config.path);
+    fprintf('MLab will then be totally unistalled.\n');
+    
 end
