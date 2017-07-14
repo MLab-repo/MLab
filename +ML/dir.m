@@ -34,8 +34,7 @@ in.Path{'.'} = @ischar;
 in.Include({}) = @(x) ischar(x) || iscellstr(x);
 in.Exclude({}) = @(x) ischar(x) || iscellstr(x);
 in.CaseSensitive(true) = @islogical;
-in.Options('') = @ischar;
-in = +in;
+in = in.process;
 
 % Cellification
 if ischar(in.Include), in.Include = {in.Include}; end
