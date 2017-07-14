@@ -2,9 +2,9 @@ function this = subsasgn(this, S, B)
 %ML.Input/subsasgn Assignation overload
 %   ML.Input/subsasgn(this, S, B) Assignation overload. This method allows 
 %   for the following syntaxes:
-%       - this.param = @checkfun            % Required input
-%       - this.param(defautt) = @checkfun   % ParamValue input
-%       - this.param{default} = @checkfun   % Optional input
+%       - this.param = @checkfun            % Required value input (positional)
+%       - this.param{default} = @checkfun   % Optional value input (positional)
+%       - this.param(default) = @checkfun   % Optional parameter/value input
 %
 %   See also ML.Input, subsasgn
 %
