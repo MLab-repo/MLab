@@ -13,7 +13,7 @@ function doc(varargin)
 % --- Get configuration
 conf = ML.config;
 
-fpath = [conf.path 'Documentation' filesep 'Html' filesep 'MLab_Home.html'];
+fpath = [conf.path 'Documentation' filesep 'Html' filesep 'MLab_home.html'];
 
 web(fpath, '-noaddressbox');
 
