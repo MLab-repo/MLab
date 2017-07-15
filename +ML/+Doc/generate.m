@@ -19,15 +19,8 @@ if strcmp(in.source, 'MLab')
     in.source = conf.path;
 end
 
-% Cellification
-if ischar(in.source)
-    in.source = {in.source};
-end
-
-% Pathification
-% in.source
-% ML.pathify(in.source);
-% in.source
+% Cellification & pathification
+in.source = ML.pathify(ML.cellify(in.source));
 
 % --- Decide Html folders
 Hpath = cellfun(@(x) [x 'Html' filesep], in.source, 'UniformOutput', false)
