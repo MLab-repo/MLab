@@ -81,6 +81,20 @@ for i = 1:numel(F)
         % TO DO
         %   - color
         
+        % --- Shortcuts
+        if ismember(L{j}, {'str', 'string'})
+            L{j} = 'char';
+        end
+       
+        % --- Cellstring
+        if strcmp(L{j}, 'cellstr') && iscell(in.(F{i}))
+            if iscellstr(in.(F{i}))
+                L{j} = 'cell';
+            else
+                error('Expected %s to be a cellstr.\n\nInstead its type is cell.', F{i});
+            end
+        end
+        
         % --- Classes -----------------------------------------------------
         
         % Classes
@@ -89,7 +103,9 @@ for i = 1:numel(F)
     end
     
     % --- Validation
-    validateattributes(in.(F{i}), Classes, Attributes, this.FunctionName, F{i});
+    if ~isempty(Classes) || ~isempty(Attributes)
+        validateattributes(in.(F{i}), Classes, Attributes, this.FunctionName, F{i});
+    end
 
 end
 
