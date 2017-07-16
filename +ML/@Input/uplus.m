@@ -10,20 +10,7 @@ function [in, unmin] = uplus(this)
 %
 %   More on <a href="matlab:ML.doc('ML.Input.uplus');">ML.doc</a>
 
-if nargout>=2
-    this.KeepUnmatched = true;
-end
-
-% Parse
-this.parse(this.args{:});
-
-% Input structure
-in = this.Results;
-
-% Unmatched inputs
-if nargout>=2
-    unmin = getfield([fields(this.Unmatched) struct2cell(this.Unmatched)]', {':'});
-end
+[in, unmin] = this.process;
 
 %! ------------------------------------------------------------------------
 %! Author: Raphaël Candelier

@@ -52,6 +52,7 @@ classdef Input < inputParser
     % --- Properties
     properties (SetAccess = protected)
         args = {};
+        postvalidation = struct();
     end
     
     % --- Constructor
