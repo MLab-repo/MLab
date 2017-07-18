@@ -31,7 +31,7 @@ else
     % --- Inputs
     in = ML.Input;
     in.s = @ischar;
-    [in, unmin] = +in;
+    [in, unmin] = in.process;
         
     % --- Outputs
     txt = sprintf(in.s, unmin{:});

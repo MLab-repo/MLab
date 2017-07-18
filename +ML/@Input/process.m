@@ -98,7 +98,7 @@ for i = 1:numel(F)
         % --- Classes -----------------------------------------------------
         
         % Classes
-        Classes{end+1} = L{j};
+        Classes{end+1} = L{j}; %#ok<*AGROW>
         
     end
     
@@ -113,7 +113,9 @@ end
 % --- Unmatched inputs ----------------------------------------------------
 
 if nargout>=2
-    unmin = this.Unmatched;
+    
+    unmin = getfield([fields(this.Unmatched) struct2cell(this.Unmatched)]', {':'}); %#ok<*GFLD>
+    
 end
 
 %! ------------------------------------------------------------------------
