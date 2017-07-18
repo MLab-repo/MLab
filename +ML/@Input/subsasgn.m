@@ -66,6 +66,7 @@ switch numel(S)
                         this.addOptional(S(1).subs, S(2).subs{1}, B);
                         
                     case 'char'
+                        
                         this.addOptional(S(1).subs, S(2).subs{1}, @(x) true);
                         this.postvalidation.(S(1).subs) = B;
                 end

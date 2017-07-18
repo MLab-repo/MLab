@@ -35,6 +35,7 @@ for i = 1:numel(F)
     
     Classes = {};
     Attributes = {};
+    Postprocess = {};
     
     % Comparison function handle
     comp = @(x, s) numel(x)>=numel(s) && strcmp(x(1:numel(s)),s);
@@ -78,9 +79,6 @@ for i = 1:numel(F)
 
         % --- MLab attributes ---------------------------------------------
         
-        % TO DO
-        %   - color
-        
         % --- Shortcuts
         if ismember(L{j}, {'str', 'string'})
             L{j} = 'char';
@@ -95,6 +93,16 @@ for i = 1:numel(F)
             end
         end
         
+        % --- Color
+        
+        %! TO DO
+        %   Check colors.
+        
+        % --- Post-process
+        if ismember(L{j}, {'topath', 'incell'})
+            Postprocess{end+1} = L{j};
+        end
+        
         % --- Classes -----------------------------------------------------
         
         % Classes
@@ -105,6 +113,22 @@ for i = 1:numel(F)
     % --- Validation
     if ~isempty(Classes) || ~isempty(Attributes)
         validateattributes(in.(F{i}), Classes, Attributes, this.FunctionName, F{i});
+    end
+    
+    % --- Post process
+    
+    % Pathification
+    if ismember('topath', Postprocess)
+        if ~strcmp(in.(F{i}), filesep)
+            in.(F{i})(end+1) = filesep;
+        end
+    end
+    
+    % Cellification
+    if ismember('incell', Postprocess)
+        if ~isa(in.(F{i}), 'cell')
+            in.(F{i}) = {in.(F{i})};
+        end
     end
 
 end
