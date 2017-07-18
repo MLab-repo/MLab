@@ -3,9 +3,21 @@ function out = dir(varargin)
 %   OUT = ML.dir lists the files and folders in the current folder, except 
 %   for the files starting with a dot. In particular, '.' and '..' are 
 %   exluded. As for DIR, results appear in the order returned by the 
-%   operating system.
+%   operating system. The output is a structure with fields:
+%       - 'name'
+%       - 'folder'
+%       - 'basename'
+%       - 'fullname'
+%       - 'extension' (e.g. '.m', '.png')
+%       - 'date'
+%       - 'bytes'
+%       - 'isdir'
+%       - 'datenum'
 %
 %   ML.dir(IN) specifies the directory to search in.
+%
+%   ML.dir(..., 'Only', TYPE) filters the output to return only elements of
+%   a certain type. TYPE can be 'Files' or 'Folders'.
 %
 %   ML.dir(..., 'Include', INC) include only the elements whose name match
 %   the regular expression patterns in INC. INC can be a single pattern 
@@ -24,47 +36,26 @@ function out = dir(varargin)
 %   ML.dir(..., 'CaseSensitive', false) performs inclusion/exclusion 
 %   filtering case-insensitively.
 %
-%   See also dir, regexp
+%   See also dir, regexp, ML.rdir
 %
 %   More on <a href="matlab:ML.doc('ML.dir');">ML.doc</a>
 
-% --- Inputs
+% --- Inputs --------------------------------------------------------------
+
 in = ML.Input;
-in.Path{'.'} = @ischar;
+in.Path{pwd} = @ischar;
+in.Only('') = @(x) ismember(lower(x), {'file', 'files', 'folder', 'folders'}) ;
 in.Include({}) = @(x) ischar(x) || iscellstr(x);
 in.Exclude({}) = @(x) ischar(x) || iscellstr(x);
 in.CaseSensitive(true) = @islogical;
-in = in.process;
+in.process;
 
-% Cellification
-if ischar(in.Include), in.Include = {in.Include}; end
-if ischar(in.Exclude), in.Exclude = {in.Exclude}; end
+% --- Process -------------------------------------------------------------
 
-% --- List files and folders
-out = dir(in.Path);
+varargin{end+1} = 'MaxRecursionLimit';
+varargin{end+1} = 1;
 
-% --- Inclusion
-
-if ~isempty(in.Include)
-    if in.CaseSensitive
-        A = cellfun(@(x) cellfun(@isempty, regexp({out(:).name},x)), in.Include, 'UniformOutput', false);
-    else
-        A = cellfun(@(x) cellfun(@isempty, regexpi({out(:).name},x)), in.Include, 'UniformOutput', false);
-    end
-    out(all(cat(1,A{:}),1)) = [];
-else
-    out(cellfun(@(x) strcmp(x(1),'.'), {out(:).name})) = [];
-end
-
-% --- Exclusion
-if ~isempty(in.Exclude)
-    if in.CaseSensitive
-        A = cellfun(@(x) cellfun(@isempty, regexp({out(:).name},x)), in.Exclude, 'UniformOutput', false);
-    else
-        A = cellfun(@(x) cellfun(@isempty, regexpi({out(:).name},x)), in.Exclude, 'UniformOutput', false);
-    end
-    out(~all(cat(1,A{:}),1)) = [];
-end
+out = ML.rdir(varargin{:});
 
 %! ------------------------------------------------------------------------
 %! Author: Raphaël Candelier

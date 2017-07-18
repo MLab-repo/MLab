@@ -8,19 +8,64 @@ function generate(varargin)
 % Apply ML.Doc.m2htmlab.m for each of these items to create individual documentation files
 % Create a FolderName.glossary file.
 
-% --- Inputs
+clc
+
+% --- Inputs --------------------------------------------------------------
+
 in = ML.Input;
-in.source{pwd} = @ischar;
+in.Source{'MLab'} = @ischar;
 in = in.process;
 
-% --- Decide the source
-if strcmp(in.source, 'MLab')
+% Get sources
+if strcmp(in.Source, 'MLab')
     conf = ML.config;
-    in.source = conf.path;
+    in.Source = {conf.path};
 end
 
-% Cellification & pathification
-in.source = ML.pathify(ML.cellify(in.source));
+% --- Preparation ---------------------------------------------------------
 
-% --- Decide Html folders
-Hpath = cellfun(@(x) [x 'Html' filesep], in.source, 'UniformOutput', false)
+% --- Get Html folders
+
+fprintf('Get Html folders ...'); tic
+
+in.Html = cellfun(@(x) [x 'Documentation' filesep 'Html' filesep], in.Source, 'UniformOutput', false);
+
+fprintf(' %.02f sec\n', toc);
+
+% --- Purge Html folders
+
+fprintf('Purge Html folders ...'); tic
+
+for i = 1:numel(in.Html)
+    
+    FileList = ML.dir(in.Html{i});
+    n = 0;
+    
+    for j = 1:numel(FileList)
+        [~,~,ext] = fileparts(FileList(j).name);
+        if ismember(ext, {'.script', '.function', '.package', '.class', '.method', '.glossary', '.plugin', '.tutorial'})
+            delete([in.Html{i} FileList(j).name]);
+            n = n+1;
+        end
+    end
+    
+end
+
+fprintf(' %.02f sec (%i files removed)\n', toc, n);
+
+% --- List files to process
+
+fprintf('Listing files to process ...'); tic
+
+FileList = {};
+
+for i = 1:numel(path)
+    
+    in.Source{i}
+    
+    
+    
+end
+
+
+fprintf(' %.02f sec\n', toc);
