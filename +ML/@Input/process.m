@@ -101,6 +101,7 @@ for i = 1:numel(F)
         % --- Post-process
         if ismember(L{j}, {'topath', 'incell'})
             Postprocess{end+1} = L{j};
+            continue
         end
         
         % --- Classes -----------------------------------------------------
@@ -109,7 +110,7 @@ for i = 1:numel(F)
         Classes{end+1} = L{j}; %#ok<*AGROW>
         
     end
-    
+        
     % --- Validation
     if ~isempty(Classes) || ~isempty(Attributes)
         validateattributes(in.(F{i}), Classes, Attributes, this.FunctionName, F{i});
