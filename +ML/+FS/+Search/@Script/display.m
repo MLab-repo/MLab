@@ -6,9 +6,9 @@ fprintf('\t\t[<a href="matlab:edit ''%s'';">Edit file</a>]' , this.Fullpath);
 fprintf('   [<a href="matlab:help ''%s'';">Help</a>]' , this.Fullpath);
 switch this.Category
     case {'Built-in', 'Matlab', 'Toolbox'}
-        fprintf('   [<a href="matlab:doc ''%s'';">Doc</a>]\n' , this.Fullpath);
+        fprintf('\t\t[<a href="matlab:doc ''%s'';">Doc</a>]\n' , this.Fullpath);
     case {'MLab', 'Plugin'}
-        fprintf('   [<a href="matlab:ML.doc(''%s'');">ML.Doc</a>]\n' , this.Fullpath);
+        fprintf(' [<a href="matlab:ML.doc(''%s'');">ML.Doc</a>]\n' , this.Fullpath);
 end
 % --- Properties
 

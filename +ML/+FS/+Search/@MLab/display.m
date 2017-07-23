@@ -23,7 +23,7 @@ if isempty(this.Plugins)
     
 else
     
-    fprintf('   [<a href="matlab:ML.plugins">Manage plugins</a>]\n');
+    fprintf('\t[<a href="matlab:ML.plugins">Manage plugins</a>]\n');
     
     tmp = cellfun(@format_link, this.Plugins, 'UniformOutput', false);
     

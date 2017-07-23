@@ -20,8 +20,8 @@ end
 
 % --- Header
 ML.CW.print(' ~bc[50 100 150]{%s} (%s / %s)', this.Name, cls, cat);
-fprintf('\t\t[<a href="matlab:edit ''%s'';">Edit file</a>]' , this.Fullpath);
-fprintf('   [<a href="matlab:help ''%s'';">Help</a>]' , this.Fullpath);
+fprintf('\t\t[<a href="matlab:edit ''%s'';">Edit classdef file</a>]', [this.Fullpath filesep this.Name '.m']);
+fprintf(' [<a href="matlab:help ''%s'';">Help</a>]' , this.Fullpath);
 switch this.Category
     case {'Built-in', 'Matlab', 'Toolbox'}
         fprintf('   [<a href="matlab:doc ''%s'';">Doc</a>]\n' , this.Fullpath);
@@ -29,7 +29,7 @@ switch this.Category
         fprintf('   [<a href="matlab:ML.doc(''%s'');">ML.Doc</a>]\n' , this.Fullpath);
 end
 
-ML.CW.print('~c[100 175 175]{%s}\n', this.Fullpath);
+ML.CW.print(' ~c[100 175 175]{%s}\n', this.Fullpath);
 
 % --- Properties
 
