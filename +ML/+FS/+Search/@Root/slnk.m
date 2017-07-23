@@ -13,4 +13,4 @@ if isempty(in.text)
     in.text = in.mhref;
 end
 
-out = ['<a href="matlab:ML.Doc.path2obj(''' in.mhref ''')">' in.text '</a>'];
+out = ['<a href="matlab:ML.FS.path2obj(''' in.mhref ''')">' in.text '</a>'];

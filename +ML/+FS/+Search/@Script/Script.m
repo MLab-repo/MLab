@@ -1,4 +1,4 @@
-classdef Script < ML.Doc.Root
+classdef Script < ML.FS.Search.Root
 
     properties (Access = public)
        
@@ -14,7 +14,7 @@ classdef Script < ML.Doc.Root
             
             % --- Parent's constructor ------------------------------------
             
-            this = this@ML.Doc.Root(varargin{:});
+            this = this@ML.FS.Search.Root(varargin{:});
             
             % --- Inputs --------------------------------------------------
 

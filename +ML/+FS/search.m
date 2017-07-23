@@ -158,7 +158,7 @@ if isempty(Path)
     return
 end
 
-out = cellfun(@ML.Doc.path2obj, Path, 'UniformOutput', false);
+out = cellfun(@ML.FS.path2obj, Path, 'UniformOutput', false);
 
 % --- Output & display ----------------------------------------------------
 

@@ -1,4 +1,4 @@
-classdef Method < ML.Doc.Root
+classdef Method < ML.FS.Search.Root
 
     properties (Access = public)
        
@@ -15,7 +15,7 @@ classdef Method < ML.Doc.Root
             
             % --- Parent's constructor ------------------------------------
             
-            this = this@ML.Doc.Root(varargin{:});
+            this = this@ML.FS.Search.Root(varargin{:});
             
             % --- Inputs --------------------------------------------------
 
