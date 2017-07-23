@@ -48,7 +48,7 @@ if isprop(this, 'Parents')
     
     tmp = [];
     for i = 1:numel(this.Parents)
-        parent = ML.search(this.Parents{i}, 'first');
+        parent = ML.FS.search(this.Parents{i}, 'first');
         tmp = [tmp this.slnk(parent.Fullpath, this.Parents{i}) '   '];
     end
     Prop{end,2} = tmp;

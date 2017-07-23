@@ -27,7 +27,7 @@ classdef Package < ML.Doc.Root
             this.Name = tmp(2:end);
             
             % --- Content
-            tmp = ML.dir(this.Fullpath);
+            tmp = ML.FS.dir(this.Fullpath);
             this.Content = {tmp(:).name};
             
             % --- Syntax

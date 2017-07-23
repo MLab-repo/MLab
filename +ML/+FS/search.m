@@ -16,8 +16,8 @@ function OUT = search(varargin)
 %       - 'warning': (default) A warning is thrown
 %       - 'error': An error is thrown
 %
-%   out = ML.FS.search(...) returns a ML.Search-dreived object, or a cell 
-%   of ML.Search-derived objects if the 'all' option is invoked.
+%   out = ML.FS.search(...) returns a ML.FS.Search-derived object, or a 
+%   cell of ML.FS.Search-derived objects if the 'all' option is invoked.
 %
 %   See also which, lookfor, exist
 %
@@ -40,7 +40,7 @@ end
 
 % Empty request
 if isempty(in.req)
-    warning('ML:search', 'Empty input.');
+    warning('ML:FS:search', 'Empty input.');
     return
 end
 
@@ -95,7 +95,7 @@ else
     if ~isempty(k) && ~isempty(which(in.req(1:k-1)))
         
         % Class & category
-        tmp = ML.search(in.req(1:k-1));
+        tmp = ML.FS.search(in.req(1:k-1));
         cls = tmp{1};
         
         % Path
@@ -149,9 +149,9 @@ if isempty(Path)
             case 'info'
                 fprintf('Could not find anything for ''%s''.\n', in.req);
             case 'warning'
-                warning('ML:search:NotFound', ['Could not find anything for ''' in.req '''.']);
+                warning('ML:FS:search:NotFound', ['Could not find anything for ''' in.req '''.']);
             case 'error'
-                error('ML:search:NotFound', ['Could not find anything for ''' in.req '''.']);
+                error('ML:FS:search:NotFound', ['Could not find anything for ''' in.req '''.']);
         end
     end
     

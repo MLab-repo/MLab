@@ -32,7 +32,7 @@ function out = table(varargin)
 %       - 'hdouble'
 %       - 'vdouble'
 %
-%   OUT = ML.Text.table(...) outputs the table a string and does not
+%   OUT = ML.Text.table(...) outputs the table as a string and does not
 %   display it in the command window.
 %
 %   See also

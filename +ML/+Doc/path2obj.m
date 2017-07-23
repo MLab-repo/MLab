@@ -3,7 +3,7 @@ function out = path2obj(varargin)
 %   OBJ = ML.Doc.path2obj(PATH) returns an object corresponding to the
 %   element located at the string PATH.
 %
-%   See also ML.search, ML.Doc.Function etc.
+%   See also ML.FS.search, ML.Doc.Function etc.
 
 % --- Inputs --------------------------------------------------------------
 
@@ -165,7 +165,7 @@ switch info.type
         out = ML.Doc.Plugin(in.path, 'info', info);
         
     otherwise
-        warning('ML:search:UnknownType', 'Unknown type');
+        warning('ML:FS:search:UnknownType', 'Unknown type');
 end
 
 %! ------------------------------------------------------------------------

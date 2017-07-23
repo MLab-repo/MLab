@@ -41,7 +41,7 @@ end
 % Package
 if isprop(this, 'Package')
     Prop{end+1,1} = '~c[gray]{Package}';
-    pack = ML.search(this.Package, 'first');    
+    pack = ML.FS.search(this.Package, 'first');    
     Prop{end,2} = [this.slnk(pack.Fullpath, this.Package) '\n'];
 end
 
