@@ -1,8 +1,8 @@
 function out = dir(varargin)
-% ML.dir Directory content
-%   OUT = ML.dir lists the files and folders in the current folder, except 
-%   for the files starting with a dot. In particular, '.' and '..' are 
-%   exluded. As for DIR, results appear in the order returned by the 
+% ML.FS.dir Directory content
+%   OUT = ML.FS.dir lists the files and folders in the current folder, 
+%   except for the files starting with a dot. In particular, '.' and '..' 
+%   are exluded. As for DIR, results appear in the order returned by the 
 %   operating system. The output is a structure with fields:
 %       - 'name'
 %       - 'folder'
@@ -14,48 +14,52 @@ function out = dir(varargin)
 %       - 'isdir'
 %       - 'datenum'
 %
-%   ML.dir(IN) specifies the directory to search in.
+%   ML.FS.dir(IN) specifies the directory to search in.
 %
-%   ML.dir(..., 'Only', TYPE) filters the output to return only elements of
-%   a certain type. TYPE can be 'Files' or 'Folders'.
+%   ML.FS.dir(..., 'Include', KEEP) or
+%   ML.FS.dir(..., 'Keep', KEEP) filters the output to keep only the
+%   elements whose name match the regular expression patterns in KEEP. KEEP
+%   can be a single pattern string or a cell of pattern strings.
 %
-%   ML.dir(..., 'Include', INC) include only the elements whose name match
-%   the regular expression patterns in INC. INC can be a single pattern 
-%   string or a cell of pattern strings. The default behavior is
-%   case-sensitive. Note that elements starting with a dot can be included
-%   if they match one of the patterns.
+%   ML.FS.dir(..., 'Exclude', REM) or
+%   ML.FS.dir(..., 'Remove', REM) filters the output to remove all elements
+%   whose name match the regular expression patterns in REM. REM can be a 
+%   single pattern string or a cell of pattern strings.
 %
-%   ML.dir(..., 'Exclude', EXC) exclude all elements whose name match the
-%   regular expresion patterns in EXC. EXC can be a single pattern 
-%   string or a cell of pattern strings. The default excluding behavior is 
-%   case-sensitive. 
-%
-%   Note: In case both inclusion and exclusion matching are invoked, 
-%   inclusion is treated prior to exclusion.
-%
-%   ML.dir(..., 'CaseSensitive', false) performs inclusion/exclusion 
+%   ML.FS.dir(..., 'CaseSensitive', false) performs inclusion/exclusion
 %   filtering case-insensitively.
 %
-%   See also dir, regexp, ML.rdir
+%   ML.FS.dir(..., 'Only', TYPE) filters the output to return only
+%   elements of a certain type. TYPE can be 'Files' or 'Folders'.
 %
-%   More on <a href="matlab:ML.doc('ML.dir');">ML.doc</a>
+%   See also ML.FS.rdir, dir, regexp
+%
+%   More on ...
+
+% === MAIN ================================================================
 
 % --- Inputs --------------------------------------------------------------
 
 in = ML.Input;
-in.Path{pwd} = @ischar;
-in.Only('') = @(x) ismember(lower(x), {'file', 'files', 'folder', 'folders'}) ;
-in.Include({}) = @(x) ischar(x) || iscellstr(x);
-in.Exclude({}) = @(x) ischar(x) || iscellstr(x);
-in.CaseSensitive(true) = @islogical;
+in.Path{pwd} = 'str';
+in.Only('') = @(x) ismember(lower(x), {'file', 'files', 'folder', 'folders', 'dir'});
+in.Include({}) = 'str,cellstr';
+in.Exclude({}) = 'str,cellstr';
+in.Keep({}) = 'str,cellstr';
+in.Remove({}) = 'str,cellstr';
+in.CaseSensitive(true) = 'logical';
 in.process;
 
 % --- Process -------------------------------------------------------------
 
-varargin{end+1} = 'MaxRecursionLimit';
+varargin{end+1} = 'MaxRecursionLevel';
 varargin{end+1} = 1;
 
-out = ML.rdir(varargin{:});
+out = ML.FS.rdir(varargin{:});
+
+% --- Output --------------------------------------------------------------
+
+out = rmfield(out, 'level');
 
 %! ------------------------------------------------------------------------
 %! Author: Raphaël Candelier
