@@ -2,16 +2,25 @@ classdef Page < handle
    
     properties
         
-      main = '';  
+        Object
+        name
+        main
       
     end
     
     
     methods
         
-        function this = Page(varargin)
+        function this = Page(Object)
         
+            % --- Definitions
+            this.Object = Object;
             
+            % --- Get properties
+            
+            % Page name
+            this.name = Object.Syntax;
+                        
         end
         
     end

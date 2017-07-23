@@ -4,7 +4,7 @@ function out = line(varargin)
 %
 %   ML.CW.line(TXT) prints a horizontal line with the string TXT.
 %
-%   ML.CW.line(TXT, ..., 'marker', M) uses the character M to fill the
+%   ML.CW.line(..., 'marker', M) uses the character M to fill the
 %   line. The marker has to be a single character string.
 %
 %   Tip: Use char(9473) to make a bold line.
@@ -75,15 +75,17 @@ else
     ML.CW.print(txt);
 end
 
-%! ------------------------------------------------------------------------
-%! Author: Raphaël Candelier
-%! Version: 1.2
-%
-%! Revisions
-%   1.2     (2016/03/09): Updated help
-%   1.1     (2015/04/02): Created help
-%   1.0     (2015/01/01): Initial version
-%
-%! ------------------------------------------------------------------------
-%! Doc
-%   <title>To do</title>
+% === DOCUMENTATION =======================================================
+
+%! Short: Horizontal line/title in the command-line window
+%! Inputs
+%! Outputs
+%! Description:
+%   ML.CW.line
+%   ML.CW.line(text)
+%   ML.CW.line(..., 'marker', m)
+%   ML.CW.line(..., 'length', length)
+%   ML.CW.line(..., 'align', side)
+%!  Examples
+%! Tips
+%! See also

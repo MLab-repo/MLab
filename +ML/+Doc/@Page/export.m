@@ -3,8 +3,8 @@ function out = export(this, varargin)
 % --- Inputs --------------------------------------------------------------
 
 in = ML.Input;
-in.filename('') = @ischar;
-in = +in;
+in.filename = 'str';
+in = in.process;
 
 % --- Preparation ---------------------------------------------------------
 

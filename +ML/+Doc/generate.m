@@ -13,59 +13,79 @@ clc
 % --- Inputs --------------------------------------------------------------
 
 in = ML.Input;
-in.Source{'MLab'} = @ischar;
+in.Source{'MLab'} = 'str,nonempty,topath';
+in.DocDir('') = 'str,topath';
 in = in.process;
 
-% Get sources
-if strcmp(in.Source, 'MLab')
-    conf = ML.config;
-    in.Source = {conf.path};
+% --- Default sources
+switch in.Source(1:end-1)
+    case 'MLab'
+        conf = ML.config;
+        in.Source = conf.path;
+        in.ContentDir = [conf.path '+ML' filesep];
+    otherwise
+        in.ContentDir = in.Source;
 end
+
+% --- Default documentation folder
+if strcmp(in.DocDir, filesep)
+    in.DocDir = [in.Source 'Documentation' filesep];
+end
+
+% --- Html folder
+in.HtmlDir = [in.DocDir 'Html' filesep];
+if ~exist(in.HtmlDir, 'dir'), mkdir(in.HtmlDir); end
 
 % --- Preparation ---------------------------------------------------------
 
-% --- Get Html folders
+% --- Display information
 
-fprintf('Get Html folders ...'); tic
+ML.CW.line('~b{ML.doc generation}');
 
-in.Html = cellfun(@(x) [x 'Documentation' filesep 'Html' filesep], in.Source, 'UniformOutput', false);
+ML.Text.table({in.ContentDir ; in.HtmlDir}, ...
+    'row_headers', {'Source' ; 'Html'}, ...
+    'style', 'compact', 'border', 'none');
+
+% --- List Html files
+
+fprintf('List Html files ...'); tic
+
+Html = ML.FS.dir(in.HtmlDir);
+
+fprintf(' %.02f sec\n', toc);
+
+% --- List content
+
+fprintf('Listing content to process ...'); tic
+
+Content = ML.FS.rdir(in.ContentDir);
 
 fprintf(' %.02f sec\n', toc);
 
-% --- Purge Html folders
+% --- Compare
 
-fprintf('Purge Html folders ...'); tic
-
-for i = 1:numel(in.Html)
+for i = 12 %:numel(Content)
+   
+    % Get object
+    Obj = ML.FS.path2obj(Content(i).fullname);
     
-    FileList = ML.dir(in.Html{i});
-    n = 0;
+    % Get html file name
+    tmp = strsplit(class(Obj), '.');
+    hname = [in.HtmlDir Obj.Syntax '.' lower(tmp{end})];
     
-    for j = 1:numel(FileList)
-        [~,~,ext] = fileparts(FileList(j).name);
-        if ismember(ext, {'.script', '.function', '.package', '.class', '.method', '.glossary', '.plugin', '.tutorial'})
-            delete([in.Html{i} FileList(j).name]);
-            n = n+1;
-        end
-    end
+    % Take decision: generate or not?
+% % %     gen = false;
+% % %     if ~exist(hname, 'file')
+% % %         gen = true;
+% % %     else
+% % %         warning('TO DO');        
+% % %     end
     
-end
-
-fprintf(' %.02f sec (%i files removed)\n', toc, n);
-
-% --- List files to process
-
-fprintf('Listing files to process ...'); tic
-
-FileList = {};
-
-for i = 1:numel(path)
+    % Create html file
+    page = ML.Doc.Page(Obj);
+    page.export(hname);
     
-    in.Source{i}
-    
-    
+    web(hname, '-noaddressbox');
     
 end
 
-
-fprintf(' %.02f sec\n', toc);
