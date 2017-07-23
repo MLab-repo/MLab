@@ -17,8 +17,8 @@ function out = rdir(varargin)
 %   ML.FS.rdir(IN) specifies the root directory to search in.
 %
 %   ML.FS.rdir(..., 'MaxRecursionLevel', MAX) specifies the maximum
-%   recursion level. As the first recursion is level 1, calling ML.rdir
-%   with MaxRecursionLevel set to 1 is equivalent to call ML.dir.
+%   recursion level. As the first recursion is level 1, calling ML.FS.rdir
+%   with MaxRecursionLevel set to 1 is equivalent to call ML.FS.dir.
 %
 %   ML.FS.rdir(..., 'Include', INC) include during the search only the
 %   elements whose name match the regular expression patterns in INC. INC
@@ -193,18 +193,6 @@ end
 
 % === DOC =================================================================
 
-%! ------------------------------------------------------------------------
-%! Author: Raphaël Candelier
-%! Version: 1.1
-%
-%! Revisions
-%   1.1     (2015/04/04): Added the pattern-based inclusion/exclusion
-%               mechanism.
-%   1.0     (2010/01/01): Initial version.
-%
-%! To_do
-%   Write ML.doc.
-%! ------------------------------------------------------------------------
 %! Doc
 %   <title>Custom title</title>
 %   <h1>ML.dir</h1>
@@ -218,3 +206,8 @@ end
 %   <p><c>dir</c> lists the files and folders in the MATLAB® current folder. Results appear in the order returned by the operating system.</p>
 %   <p>This is some html <doc target='text'>text</doc></p>.
 %   You should take at the <MLdoc target="parafit">ML.parafit</MLdoc> function.
+
+%! To_do
+%   - Write documentation.
+%   - Change date format to 'YYYY-MM-DD HH:MM:SS' (based on datenum). Make
+%       a MLab function for this, e.g. ML.Date.fromDatenum
