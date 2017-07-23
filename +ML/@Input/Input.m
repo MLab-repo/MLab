@@ -61,7 +61,7 @@ classdef Input < inputParser
         function this = Input(varargin)
             
             % FunctionName
-            [~, this.FunctionName] = fileparts(ML.Files.whocalled);
+            [~, this.FunctionName] = fileparts(ML.FS.whocalled);
             
             % Get arguments
             if numel(varargin)        
