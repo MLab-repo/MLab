@@ -1,24 +1,27 @@
 function OUT = search(varargin)
-%ML.search Locate functions, packages, classes, methods and more
-%   ML.search(NAME) displays information on the script, function, package,
-%   class, method or MLab item (MLab, plugin or tutorial) designated by the
-%   entity NAME. NAME can be a string or a function handle.
+%ML.FS.search Locate functions, packages, classes, methods and more
+%   ML.FS.search(NAME) displays information on the script, function, 
+%   package, class, method or MLab item (MLab, plugin or tutorial) 
+%   designated by the entity NAME. NAME can be a string or a function 
+%   handle.
 %
-%   ML.search(..., 'first') displays information on the first found item
+%   ML.FS.search(..., 'first') displays information on the first found item
 %   designated by the entity NAME. This entry is the one accessible in the
 %   path, the others are shadowed.
 %
-%   ML.search(..., 'notfound', NFP) uses a custom "not found procedure".
+%   ML.FS.search(..., 'notfound', NFP) uses a custom "not found procedure".
 %   NFP is a string which can be:
 %       - 'none': Nothing is done
 %       - 'info': A message is displayed in the command window
 %       - 'warning': (default) A warning is thrown
 %       - 'error': An error is thrown
 %
-%   out = ML.search(...) returns a ML.Search-dreived object, or a cell of
-%   ML.Search-derived objects if the 'all' option is invoked.
+%   out = ML.FS.search(...) returns a ML.Search-dreived object, or a cell 
+%   of ML.Search-derived objects if the 'all' option is invoked.
 %
 %   See also which, lookfor, exist
+%
+%   More on ...
 
 % --- Inputs --------------------------------------------------------------
 
