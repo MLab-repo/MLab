@@ -1,9 +1,9 @@
 function out = path2obj(varargin)
-%ML.Doc.path2obj transforms a path into a Search objet
-%   OBJ = ML.Doc.path2obj(PATH) returns an object corresponding to the
+%ML.FS.path2obj transforms a path into a Search objet
+%   OBJ = ML.FS.path2obj(PATH) returns an object corresponding to the
 %   element located at the string PATH.
 %
-%   See also ML.FS.search, ML.Doc.Function etc.
+%   See also ML.FS.search, ML.FS.Search.Function etc.
 
 % --- Inputs --------------------------------------------------------------
 
@@ -73,6 +73,7 @@ if ~isempty(in.path)
     % --- Type ------------------------------------------------------------
     
     [P, name, ext] = fileparts(in.path);
+        
     if ~isempty(name)
         switch name(1)
             
@@ -86,14 +87,14 @@ if ~isempty(in.path)
                 
                 % --- Method, function or script ?
                 if ismember(ext, {'', '.m', '.p'})
-                    
+                                        
                     [~, tmp] = fileparts(P);
                     if strcmp(tmp(1), '@')
                         
                         % Method
                         info.type = 'Method';
                         
-                        cls = ML.Doc.path2obj(P);
+                        cls = ML.FS.path2obj(P);
                         info.class = cls.Name;
                         
                     else
@@ -123,7 +124,7 @@ end
 
 % --- Containing package ----------------------------------------------
 
-if ~ismember(info.type, {'Method'})
+if ~ismember(info.type, {'Class', 'Method'})
     str = fileparts(in.path);
     I = strfind(str, [filesep '+']);
     tmp = cell(numel(I), 1);
@@ -144,28 +145,28 @@ end
 switch info.type
     
     case 'Function'
-        out = ML.Doc.Function(in.path, 'info', info);
+        out = ML.FS.Search.Function(in.path, 'info', info);
         
     case 'Script'
-        out = ML.Doc.Script(in.path, 'info', info);
+        out = ML.FS.Search.Script(in.path, 'info', info);
         
     case 'Package'
-        out = ML.Doc.Package(in.path, 'info', info);
+        out = ML.FS.Search.Package(in.path, 'info', info);
         
     case 'Class'
-        out = ML.Doc.Class(in.path, 'info', info);
+        out = ML.FS.Search.Class(in.path, 'info', info);
         
     case 'Method'
-        out = ML.Doc.Method(in.path, 'info', info);
+        out = ML.FS.Search.Method(in.path, 'info', info);
         
     case 'MLab'
-        out = ML.Doc.MLab();
+        out = ML.FS.Search.MLab();
         
     case 'Plugin'
-        out = ML.Doc.Plugin(in.path, 'info', info);
+        out = ML.FS.Search.Plugin(in.path, 'info', info);
         
     otherwise
-        warning('ML:FS:search:UnknownType', 'Unknown type');
+        warning('ML:FS:Search:UnknownType', 'Unknown type');
 end
 
 %! ------------------------------------------------------------------------
