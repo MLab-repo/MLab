@@ -1,5 +1,5 @@
-classdef Html < handle
-%ML.Html Html generation
+classdef Xml < handle
+%ML.XML.Xml XML generation class
 %
 %   More on ...
     
@@ -17,7 +17,7 @@ classdef Html < handle
     % --- Constructor
     methods
         
-        function this = Html(varargin)
+        function this = Xml(varargin)
             
             % Create the basic stucture
             this.NewElm(0, 'Root', 'options', '<!DOCTYPE html>');
