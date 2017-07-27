@@ -44,7 +44,7 @@ if ischar(in.attributes)
     att = strsplit(in.attributes, ',');
     in.attributes = struct();
     for i = 1:numel(att)
-        tmp = strsplit(att{i}, '=');
+        tmp = cellfun(@strtrim, strsplit(att{i}, '='), 'UniformOutput', false);
         in.attributes.(tmp{1}) = tmp{2};
     end
     

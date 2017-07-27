@@ -1,66 +1,66 @@
-function index = NewElm(this, varargin)
+function append(this, varargin)
 
 % --- Inputs --------------------------------------------------------------
 
 in = ML.Input;
-in.ppos = 'numeric,integer,>=0';
-in.type = 'str';
-in.options(struct([])) = 'str,struct';
+in.parentPosition = 'numeric,integer,>=0';
+in.block = 'ML.TL.Block';
 in = in.process;
 
 % --- Processing ----------------------------------------------------------
 
-% Index
-index = numel(this.Tree)+1;
-
 % --- Parent and position
-if strcmp(in.type, 'Root')
-    
-    parent = NaN;
-    pos = 1;
-    
-else
-    
-    switch numel(in.ppos)
-        case 1
-            parent = in.ppos;
-            pos = numel(this.Tree(parent).children)+1;
+
+switch numel(in.parentPosition)
+    case 1
+        
+        if in.parentPosition==0
             
-        case 2
-            parent = in.ppos(1);
-            pos = min(in.ppos(2), numel(this.Tree(parent).children)+1);
+            parent = 0;
+            pos = 1;
+            
+        else
+            
+            parent = in.parentPosition;
+            pos = numel(this.Tree(parent).content)+1;
+        end
+        
+    case 2
+        
+        parent = in.parentPosition(1);
+        pos = min(in.parentPosition(2), numel(this.Tree(parent).content)+1);
+        
+end
+
+% --- Index
+ref = numel(this.Tree);
+
+% --- Add elements in the tree
+
+for i = 1:numel(in.block.Tree)
+
+    this.Tree(ref+i).parent = parent;
+    this.Tree(ref+i).pos = pos;
+    this.Tree(ref+i).type = in.block.Tree(i).type;
+    this.Tree(ref+i).tagname = in.block.Tree(i).tagname;
+    this.Tree(ref+i).attributes = in.block.Tree(i).attributes;
+    this.Tree(ref+i).inline = in.block.Tree(i).inline;
+    
+    switch in.block.Tree(i).type
+        case 'container'
+            this.Tree(ref+i).content = in.block.Tree(i).content + ref;
+        otherwise
+            this.Tree(ref+i).content = in.block.Tree(i).content;
     end
     
 end
-
-
-
-% --- Parse options
-
-if ~ismember(in.type, {'Root', 'text'}) && ischar(in.options)
-
-    opt = strsplit(in.options, ',');
-    in.options = struct();
-    for i = 1:numel(opt)
-        tmp = strsplit(opt{i}, '=');
-        in.options.(tmp{1}) = tmp{2};
-    end
-    
-end
-
-% --- Add element in the tree
-
-this.Tree(index).parent = parent;
-this.Tree(index).pos = pos;
-this.Tree(index).children = [];
-this.Tree(index).type = in.type;
-this.Tree(index).options = in.options;
 
 % --- Update parenthood
 
-if ~isnan(parent)
-    if pos<=numel(this.Tree(parent).children)
-        this.Tree(parent).children = [this.Tree(parent).children(1:pos-1) NaN this.Tree(parent).children(pos:end)];
+if parent>0
+    if pos<=numel(this.Tree(parent).content)
+        this.Tree(parent).content = [this.Tree(parent).content(1:pos-1) ref+1 this.Tree(parent).content(pos:end)];
+    else
+        this.Tree(parent).content(pos) = ref+1;
     end
-    this.Tree(parent).children(pos) = index;
 end
