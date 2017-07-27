@@ -8,8 +8,10 @@ classdef Block < handle
         
         opener = {'<', '>'};
         closer = {'</', '>'};
-        singler = {'<', '/>'};
+        singler = {'<', ' />'};
+        commenter = {'<!-- ', ' -->'};
         spacer = '  ';
+        
         
         Tree = struct('parent', {}, 'position', {}, 'type', {}, ...
             'tagname', {}, 'attributes', {}, 'content', {}, 'inline', {});
@@ -26,6 +28,14 @@ classdef Block < handle
            
             
             
+        end
+        
+        % --- Setter methods ---------------------------------------------
+        function this = set.condensed(this, value)
+            this.condensed = value;
+            if value
+                this.indent = false;
+            end
         end
         
     end

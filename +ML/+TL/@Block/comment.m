@@ -1,12 +1,10 @@
-function index = container(this, varargin)
+function index = comment(this, varargin)
 
 % --- Inputs --------------------------------------------------------------
 
 in = ML.Input;
 in.parentPosition = 'numeric,integer,>=0';
-in.tagname = 'str';
-in.attributes(struct([])) = 'str,struct';
-in.inline(false) = 'logical';
+in.content = 'char';
 in = in.process;
 
 % --- Processing ----------------------------------------------------------
@@ -37,28 +35,15 @@ end
 % --- Index
 index = numel(this.Tree)+1;
 
-% --- Parse options
-
-if ischar(in.attributes)
-    
-    att = strsplit(in.attributes, ',');
-    in.attributes = struct();
-    for i = 1:numel(att)
-        tmp = strsplit(att{i}, '=');
-        in.attributes.(tmp{1}) = tmp{2};
-    end
-    
-end
-
 % --- Add element in the tree
 
 this.Tree(index).parent = parent;
 this.Tree(index).position = pos;
-this.Tree(index).type = 'container';
-this.Tree(index).tagname = in.tagname;
-this.Tree(index).attributes = in.attributes;
-this.Tree(index).content = [];
-this.Tree(index).inline = in.inline;
+this.Tree(index).type = 'comment';
+this.Tree(index).tagname = '';
+this.Tree(index).attributes = struct([]);
+this.Tree(index).content = in.content;
+this.Tree(index).inline = false;
 
 % --- Update parenthood
 if parent>0

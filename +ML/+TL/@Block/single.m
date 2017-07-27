@@ -1,4 +1,4 @@
-function index = container(this, varargin)
+function index = single(this, varargin)
 
 % --- Inputs --------------------------------------------------------------
 
@@ -6,7 +6,6 @@ in = ML.Input;
 in.parentPosition = 'numeric,integer,>=0';
 in.tagname = 'str';
 in.attributes(struct([])) = 'str,struct';
-in.inline(false) = 'logical';
 in = in.process;
 
 % --- Processing ----------------------------------------------------------
@@ -54,11 +53,11 @@ end
 
 this.Tree(index).parent = parent;
 this.Tree(index).position = pos;
-this.Tree(index).type = 'container';
+this.Tree(index).type = 'single';
 this.Tree(index).tagname = in.tagname;
 this.Tree(index).attributes = in.attributes;
 this.Tree(index).content = [];
-this.Tree(index).inline = in.inline;
+this.Tree(index).inline = false;
 
 % --- Update parenthood
 if parent>0
