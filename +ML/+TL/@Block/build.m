@@ -1,4 +1,4 @@
-function out = build(this)
+function out = build(this, varargin)
 
 % --- Built text ----------------------------------------------------------
 
