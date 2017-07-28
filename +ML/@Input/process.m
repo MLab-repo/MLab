@@ -1,4 +1,4 @@
-function [in, unmin] = process(this)
+function [in, unmin] = process(this, varargin)
 %ML.Input/uplus Input argument parsing
 %   IN = ML.Input/uplus executes the PARSE method of the parent class 
 %   <a href="matlab:help inputParser;">inputParser</a> and returns an input structure IN.
@@ -10,10 +10,21 @@ function [in, unmin] = process(this)
 %
 %   More on <a href="matlab:ML.doc('ML.Input.uplus');">ML.doc</a>
 
+% --- Code checking -------------------------------------------------------
+
+%#ok<*GFLD>
+
+% --- Inputs --------------------------------------------------------------
+
+p = inputParser;
+p.addParameter('merge', false, @islogical);
+p.addParameter('UnmatchedClass', 'cell', @(x) ismember(x, {'cell', 'struct'}));
+p.parse(varargin{:});
+
 % --- Parsing -------------------------------------------------------------
 
 % Keep unmatched if asked for
-if nargout>=2
+if nargout>=2 || p.Results.merge
     this.KeepUnmatched = true;
 end
 
@@ -136,11 +147,22 @@ end
 
 
 % --- Unmatched inputs ----------------------------------------------------
+if p.Results.merge
+    tmp = [fieldnames(in), struct2cell(in); fieldnames(this.Unmatched), struct2cell(this.Unmatched)].';
+    in = struct(tmp{:});
+end
 
 if nargout>=2
     
-    unmin = getfield([fields(this.Unmatched) struct2cell(this.Unmatched)]', {':'}); %#ok<*GFLD>
-    
+    switch p.Results.UnmatchedClass
+        
+        case 'cell'
+            unmin = getfield([fields(this.Unmatched) struct2cell(this.Unmatched)]', {':'});
+            
+        case 'struct'
+            unmin = this.Unmatched;
+            
+    end
 end
 
 %! ------------------------------------------------------------------------
