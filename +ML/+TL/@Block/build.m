@@ -11,6 +11,14 @@ nbuild(1,0);
 
 % === Nested building =====================================================
 
+    function a = attribute(index, field)
+        if isnumeric(this.Tree(index).attributes.(field))
+            a = num2str(this.Tree(index).attributes.(field));
+        else
+            a = this.Tree(index).attributes.(field);
+        end
+    end
+
     function nbuild(index, level)
         
         switch this.Tree(index).type
@@ -37,7 +45,7 @@ nbuild(1,0);
                     else
                         out = [out ' ' F{i}];
                     end                    
-                    out = [out '=' this.attquote this.Tree(index).attributes.(F{i}) this.attquote]; 
+                    out = [out '=' this.attquote attribute(index, F{i}) this.attquote]; 
                 end
                 
                 % Close
@@ -132,7 +140,7 @@ nbuild(1,0);
                     else
                         out = [out ' ' F{i}];
                     end                    
-                    out = [out '=' this.attquote this.Tree(index).attributes.(F{i}) this.attquote];
+                    out = [out '=' this.attquote attribute(index, F{i}) this.attquote];
                 end
                 
                 % Close
