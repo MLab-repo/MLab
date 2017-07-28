@@ -5,6 +5,7 @@ function index = comment(this, varargin)
 in = ML.Input;
 in.parentPosition = 'numeric,integer,>=0';
 in.content = 'char';
+in.outline(true) = 'logical';
 in = in.process;
 
 % --- Processing ----------------------------------------------------------
@@ -52,4 +53,8 @@ if parent>0
     else
         this.Tree(parent).content(pos) = index;
     end
+end
+
+if ~in.outline
+    this.Tree(parent).inline = true;
 end

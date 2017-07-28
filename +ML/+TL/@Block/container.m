@@ -6,6 +6,7 @@ in = ML.Input;
 in.parentPosition = 'numeric,integer,>=0';
 in.tagname = 'str';
 in.attributes(struct([])) = 'str,struct';
+in.outline(true) = 'logical';
 in.inline(false) = 'logical';
 in = in.process;
 
@@ -51,7 +52,6 @@ if ischar(in.attributes)
 end
 
 % --- Add element in the tree
-
 this.Tree(index).parent = parent;
 this.Tree(index).position = pos;
 this.Tree(index).type = 'container';
@@ -67,4 +67,8 @@ if parent>0
     else
         this.Tree(parent).content(pos) = index;
     end
+end
+
+if ~in.outline
+    this.Tree(parent).inline = true;
 end

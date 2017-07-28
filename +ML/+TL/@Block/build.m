@@ -17,11 +17,6 @@ nbuild(1,0);
             
             case 'container'
             
-                % Indentation
-                if this.indent && ~this.Tree(index).inline
-                    out = [out repmat(this.spacer, [1 level])];
-                end
-                
                 % --- Opening tag
                     
                 % Open
@@ -48,33 +43,53 @@ nbuild(1,0);
                 % Close
                 out = [out this.opener{2}];
                                 
-                 % Indentation
-                if ~this.condensed && ~this.Tree(index).inline
-                    out = [out newline];
+                 % Spacings
+                if ~this.condensed 
+                    
+                    % Newline
+                    if ~this.Tree(index).inline
+                        out = [out newline];
+                    end
+                    
+                    % Indentation
+                    if this.indent && ~this.Tree(index).inline
+                        out = [out repmat(this.spacer, [1 level+1])];
+                    end
+                    
                 end
                 
                 % --- Content
-                
-                % Inline aspiration rule
-                outline = false;
-                if any([this.Tree(this.Tree(index).content).inline])
-                    for i = 1:numel(this.Tree(index).content)
-                        this.Tree(this.Tree(index).content(i)).inline = true;
-                    end
-                    outline =  ~this.Tree(index).inline;
-                end
-
-                if this.indent && outline
-                    out = [out repmat(this.spacer, [1 level+1])];
-                end
-                
+               
                 % Push content
-                for i = this.Tree(index).content
-                    nbuild(i, level+1);
+                for i = 1:numel(this.Tree(index).content)
+                    
+                    nbuild(this.Tree(index).content(i), level+1);
+                    
+                    if ~this.condensed && ...
+                            ~this.Tree(index).inline && ...
+                            i<numel(this.Tree(index).content)
+                        
+                        out = [out newline];
+                        if this.indent
+                            out = [out repmat(this.spacer, [1 level+1])];
+                        end
+                        
+                    end
                 end
                 
-                if ~this.condensed  && outline
-                    out = [out newline];
+                % Spacings
+                if ~this.condensed
+                    
+                    % Newline
+                    if ~this.Tree(index).inline
+                        out = [out newline];
+                    end
+                    
+                    % Indentation
+                    if this.indent && ~this.Tree(index).inline
+                        out = [out repmat(this.spacer, [1 level-1])];
+                    end
+                    
                 end
                 
                 % --- Closing tag
@@ -97,18 +112,8 @@ nbuild(1,0);
                 % Closer
                 out = [out this.closer{2}];
                                 
-                % New line
-                if ~this.condensed  && ~this.Tree(index).inline
-                    out = [out newline];
-                end
-                
             case 'single'            
-                
-                 % Indentation
-                if this.indent
-                    out = [out repmat(this.spacer, [1 level])];
-                end
-                                
+                                                
                 % Open and tagname
                 out = [out this.singler{1}];
                 
@@ -133,40 +138,16 @@ nbuild(1,0);
                 % Close
                 out = [out this.singler{2}];
                 
-                % Indentation
-                if ~this.condensed
-                    out = [out newline];
-                end
-
             case 'text'
-                
-                 % Indentation
-                if this.indent && ~this.Tree(index).inline
-                    out = [out repmat(this.spacer, [1 level])];
-                end
                                 
                 % Text
                 out = [out this.Tree(index).content];
-                
-                % New line
-                if ~this.condensed  && ~this.Tree(index).inline
-                    out = [out newline];
-                end
-                
+                                
             case 'comment'
-                
-                 % Indentation
-                if this.indent
-                    out = [out repmat(this.spacer, [1 level])];
-                end
                                 
                 % Text
                 out = [out this.commenter{1} this.Tree(index).content this.commenter{2}];
                 
-                % Indentation
-                if ~this.condensed
-                    out = [out newline];
-                end
         end
         
     end
