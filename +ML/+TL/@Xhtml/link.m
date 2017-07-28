@@ -3,10 +3,7 @@ function out = link(this, varargin)
 % --- Input ---------------------------------------------------------------
 in = ML.Input;
 in.href = 'char';
-[in, unmin] = in.process;
+in = in.process('merge', true);
 
 % --- Processing ----------------------------------------------------------
-
-% unmin
-
-out = this.single(this.Index.head, 'link', 'attributes', struct());
+out = this.single(this.Index.head, 'link', 'attributes', in);
