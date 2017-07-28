@@ -11,7 +11,9 @@ classdef Block < handle
         singler = {'<', ' />'};
         commenter = {'<!-- ', ' -->'};
         spacer = '  ';
-        
+        attquote = '"';
+        lowtag = false;
+        lowatt = false;
         
         Tree = struct('parent', {}, 'position', {}, 'type', {}, ...
             'tagname', {}, 'attributes', {}, 'content', {}, 'inline', {});

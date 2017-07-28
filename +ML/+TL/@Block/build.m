@@ -1,11 +1,15 @@
 function out = build(this, varargin)
 
+% --- Code checking -------------------------------------------------------
+
+%#ok<*AGROW>
+
 % --- Built text ----------------------------------------------------------
 
 out = '';
 nbuild(1,0);
 
-% === NESTED FUNCTIONS ====================================================
+% === Nested building =====================================================
 
     function nbuild(index, level)
         
@@ -20,13 +24,25 @@ nbuild(1,0);
                 
                 % --- Opening tag
                     
-                % Open and tagname
-                out = [out this.opener{1} this.Tree(index).tagname];
+                % Open
+                out = [out this.opener{1}];
+                
+                % Tagname
+                if this.lowtag
+                    out = [out lower(this.Tree(index).tagname)];
+                else
+                    out = [out this.Tree(index).tagname];
+                end
                 
                 % Attributes
                 F = fieldnames(this.Tree(index).attributes);
                 for i = 1:numel(F)
-                    out = [out ' ' F{i} '=''' this.Tree(index).attributes.(F{i}) '''']; %#ok<*AGROW>
+                    if this.lowatt
+                        out = [out ' ' lower(F{i})];
+                    else
+                        out = [out ' ' F{i}];
+                    end                    
+                    out = [out '=' this.attquote this.Tree(index).attributes.(F{i}) this.attquote]; 
                 end
                 
                 % Close
@@ -68,9 +84,19 @@ nbuild(1,0);
                     out = [out repmat(this.spacer, [1 level])];
                 end
                                 
-                % Tag
-                out = [out this.closer{1} this.Tree(index).tagname this.closer{2}];
+                % Close
+                out = [out this.closer{1}];
                 
+                % Tagname
+                if this.lowtag
+                    out = [out lower(this.Tree(index).tagname)];
+                else
+                    out = [out this.Tree(index).tagname];
+                end
+                
+                % Closer
+                out = [out this.closer{2}];
+                                
                 % New line
                 if ~this.condensed  && ~this.Tree(index).inline
                     out = [out newline];
@@ -84,12 +110,24 @@ nbuild(1,0);
                 end
                                 
                 % Open and tagname
-                out = [out this.singler{1} this.Tree(index).tagname];
+                out = [out this.singler{1}];
+                
+                % Tagname
+                if this.lowtag
+                    out = [out lower(this.Tree(index).tagname)];
+                else
+                    out = [out this.Tree(index).tagname];
+                end
                 
                 % Attributes
                 F = fieldnames(this.Tree(index).attributes);
                 for i = 1:numel(F)
-                    out = [out ' ' F{i} '=''' this.Tree(index).attributes.(F{i}) '''']; %#ok<*AGROW>
+                    if this.lowatt
+                        out = [out ' ' lower(F{i})];
+                    else
+                        out = [out ' ' F{i}];
+                    end                    
+                    out = [out '=' this.attquote this.Tree(index).attributes.(F{i}) this.attquote];
                 end
                 
                 % Close

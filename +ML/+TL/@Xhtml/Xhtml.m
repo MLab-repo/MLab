@@ -23,8 +23,7 @@ classdef Xhtml < ML.TL.Block
             in.title{''} = 'char';
             [in, unmin] = in.process;
             
-            % --- Parent's constructor
-            
+            % --- Parent's constructor            
             this = this@ML.TL.Block(unmin{:});
             
             % --- Default elements
@@ -33,6 +32,9 @@ classdef Xhtml < ML.TL.Block
             this.Index.body = this.container(this.Index.html, 'body');
             this.title(in.title);
 
+            % --- Output in lowercase
+            this.lowtag = true;
+            this.lowatt = true;
             
         end
         
