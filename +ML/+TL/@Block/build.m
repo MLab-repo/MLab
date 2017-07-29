@@ -11,14 +11,6 @@ nbuild(1,0);
 
 % === Nested building =====================================================
 
-    function a = attribute(index, field)
-        if isnumeric(this.Tree(index).attributes.(field))
-            a = num2str(this.Tree(index).attributes.(field));
-        else
-            a = this.Tree(index).attributes.(field);
-        end
-    end
-
     function nbuild(index, level)
         
         switch this.Tree(index).type
@@ -38,14 +30,31 @@ nbuild(1,0);
                 end
                 
                 % Attributes
-                F = fieldnames(this.Tree(index).attributes);
-                for i = 1:numel(F)
-                    if this.lowatt
-                        out = [out ' ' lower(F{i})];
-                    else
-                        out = [out ' ' F{i}];
-                    end                    
-                    out = [out '=' this.attquote attribute(index, F{i}) this.attquote]; 
+                switch class(this.Tree(index).attributes)
+                    
+                    case 'struct'
+                        
+                        F = fieldnames(this.Tree(index).attributes);
+                        for i = 1:numel(F)
+                            if this.lowatt
+                                out = [out ' ' lower(F{i})];
+                            else
+                                out = [out ' ' F{i}];
+                            end
+                            out = [out '=' this.attquote mkstr(this.Tree(index).attributes.(F{i})) this.attquote];
+                        end
+                        
+                    case 'cell'
+                        
+                        for i = 1:size(this.Tree(index).attributes, 1)
+                            if this.lowatt
+                                out = [out ' ' lower(this.Tree(index).attributes{i,1})];
+                            else
+                                out = [out ' ' this.Tree(index).attributes{i,1}];
+                            end
+                            out = [out '=' this.attquote mkstr(this.Tree(index).attributes{i,2}) this.attquote];
+                        end
+                        
                 end
                 
                 % Close
@@ -133,14 +142,31 @@ nbuild(1,0);
                 end
                 
                 % Attributes
-                F = fieldnames(this.Tree(index).attributes);
-                for i = 1:numel(F)
-                    if this.lowatt
-                        out = [out ' ' lower(F{i})];
-                    else
-                        out = [out ' ' F{i}];
-                    end                    
-                    out = [out '=' this.attquote attribute(index, F{i}) this.attquote];
+                switch class(this.Tree(index).attributes)
+                    
+                    case 'struct'
+                        
+                        F = fieldnames(this.Tree(index).attributes);
+                        for i = 1:numel(F)
+                            if this.lowatt
+                                out = [out ' ' lower(F{i})];
+                            else
+                                out = [out ' ' F{i}];
+                            end
+                            out = [out '=' this.attquote mkstr(this.Tree(index).attributes.(F{i})) this.attquote];
+                        end
+                        
+                    case 'cell'
+                        
+                        for i = 1:size(this.Tree(index).attributes, 1)
+                            if this.lowatt
+                                out = [out ' ' lower(this.Tree(index).attributes{i,1})];
+                            else
+                                out = [out ' ' this.Tree(index).attributes{i,1}];
+                            end
+                            out = [out '=' this.attquote mkstr(this.Tree(index).attributes{i,2}) this.attquote];
+                        end
+                        
                 end
                 
                 % Close
@@ -160,4 +186,10 @@ nbuild(1,0);
         
     end
 
+end
+
+% === Local functions =====================================================
+
+function a = mkstr(a)
+if isnumeric(a), a = num2str(a); end
 end

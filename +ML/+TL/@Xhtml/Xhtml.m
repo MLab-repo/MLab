@@ -21,7 +21,7 @@ classdef Xhtml < ML.TL.Block
             % --- Input
             in = ML.Input;
             in.title{''} = 'char';
-            [in, unmin] = in.process;
+            [in, unmin] = in.process('UnmatchedClass', 'cell');
             
             % --- Parent's constructor            
             this = this@ML.TL.Block(unmin{:});

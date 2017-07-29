@@ -12,13 +12,16 @@ function [in, unmin] = process(this, varargin)
 
 % --- Code checking -------------------------------------------------------
 
+%#ok<*AGROW>
 %#ok<*GFLD>
 
 % --- Inputs --------------------------------------------------------------
 
 p = inputParser;
 p.addParameter('merge', false, @islogical);
-p.addParameter('UnmatchedClass', 'cell', @(x) ismember(x, {'cell', 'struct'}));
+p.addParameter('OutputClass', '', @(x) ismember(x, {'cell', 'struct'}));
+p.addParameter('MatchedClass', 'struct', @(x) ismember(x, {'cell', 'struct'}));
+p.addParameter('UnmatchedClass', 'struct', @(x) ismember(x, {'cell', 'struct'}));
 p.parse(varargin{:});
 
 % --- Parsing -------------------------------------------------------------
@@ -118,7 +121,7 @@ for i = 1:numel(F)
         % --- Classes -----------------------------------------------------
         
         % Classes
-        Classes{end+1} = L{j}; %#ok<*AGROW>
+        Classes{end+1} = L{j};
         
     end
         
@@ -146,22 +149,23 @@ for i = 1:numel(F)
 end
 
 
-% --- Unmatched inputs ----------------------------------------------------
+% --- Output transfromation -----------------------------------------------
+
 if p.Results.merge
     tmp = [fieldnames(in), struct2cell(in); fieldnames(this.Unmatched), struct2cell(this.Unmatched)].';
     in = struct(tmp{:});
 end
 
+if ismember('cell', {p.Results.MatchedClass, p.Results.OutputClass})
+    in = getfield([fields(in) struct2cell(in)]', {':'});
+end
+
 if nargout>=2
     
-    switch p.Results.UnmatchedClass
-        
-        case 'cell'
-            unmin = getfield([fields(this.Unmatched) struct2cell(this.Unmatched)]', {':'});
-            
-        case 'struct'
-            unmin = this.Unmatched;
-            
+    if ismember('cell', {p.Results.UnmatchedClass, p.Results.OutputClass})
+        unmin = getfield([fields(this.Unmatched) struct2cell(this.Unmatched)]', {':'});
+    else
+        unmin = this.Unmatched;    
     end
 end
 

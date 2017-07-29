@@ -5,7 +5,7 @@ function index = container(this, varargin)
 in = ML.Input;
 in.parentPosition = 'numeric,integer,>=0';
 in.tagname = 'str';
-in.attributes(struct([])) = 'str,struct';
+in.attributes({}) = 'str,cell,struct';
 in.outline(true) = 'logical';
 in.inline(false) = 'logical';
 in = in.process;
@@ -40,14 +40,22 @@ index = numel(this.Tree)+1;
 
 % --- Parse options
 
-if ischar(in.attributes)
+switch class(in.attributes)
     
-    att = strsplit(in.attributes, ',');
-    in.attributes = struct();
-    for i = 1:numel(att)
-        tmp = cellfun(@strtrim, strsplit(att{i}, '='), 'UniformOutput', false);
-        in.attributes.(tmp{1}) = tmp{2};
-    end
+    case 'cell'
+        
+        if size(in.attributes, 2)==1
+            in.attributes = reshape(in.attributes, [2 numel(in.attributes)/2])';
+        end
+    
+    case 'char'
+        
+        att = strsplit(in.attributes, ',');
+        in.attributes = struct();
+        for i = 1:numel(att)
+            tmp = cellfun(@strtrim, strsplit(att{i}, '='), 'UniformOutput', false);
+            in.attributes.(tmp{1}) = tmp{2};
+        end
     
 end
 
