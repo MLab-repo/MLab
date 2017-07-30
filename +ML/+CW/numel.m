@@ -31,7 +31,7 @@ else
     % --- Inputs
     in = ML.Input;
     in.s = @ischar;
-    [in, unmin] = in.process;
+    [in, unmin] = in.process('UnmatchedClass', 'cell');
         
     % --- Outputs
     txt = sprintf(in.s, unmin{:});
