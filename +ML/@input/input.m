@@ -1,15 +1,15 @@
-classdef Input < inputParser
-%ML.Input Input manager
+classdef input < inputParser
+%ML.input Input manager
 %   This class simplifies the syntax of the built-in <a href="matlab:doc inputParser;">inputParser</a>, from which
 %   it inherits.
 %
 %   --- Syntax
 %
-%   ML.Input reates an Input manager object. The varargin cell of the
-%   calling function is automatically fetched and feeded as an input to the
-%   constructor.
+%   ML.input reates an input manager object. The varargin cell of the
+%   calling function is automatically fetched and feeded as a parameter to 
+%   the constructor.
 %
-%   ML.Input(IN) specifies the inputs. IN can be either a varargin-like 
+%   ML.input(IN) specifies the inputs. IN can be either a varargin-like 
 %   cell of inputs or a structure.
 %
 %   --- Usage
@@ -58,7 +58,7 @@ classdef Input < inputParser
     % --- Constructor
     methods
         
-        function this = Input(varargin)
+        function this = input(varargin)
             
             % FunctionName
             [~, this.FunctionName] = fileparts(ML.FS.whocalled);
@@ -80,6 +80,7 @@ end
 %! Version: 1.1
 %
 %! Revisions
+%   1.2     (2018/02/12): Renamed from ML.Input to ML.input
 %   1.1     (2015/04/01): Created help, added automatic handling of 
 %               FunctionName and management of the 'StructExpand' property.
 %   1.0     (2015/01/01): Initial version.
