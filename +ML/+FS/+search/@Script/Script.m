@@ -1,34 +1,29 @@
-classdef Package < ML.FS.Search.Root
+classdef Script < ML.FS.search.Root
 
     properties (Access = public)
        
         Syntax
-        Content = {}
+        Extension = ''
         
     end
     
     methods
         
         % --- Constructor -------------------------------------------------
-        function this = Package(varargin)
+        function this = Script(varargin)
             
             % --- Parent's constructor ------------------------------------
             
-            this = this@ML.FS.Search.Root(varargin{:});
+            this = this@ML.FS.search.Root(varargin{:});
             
             % --- Inputs --------------------------------------------------
 
             in = ML.Input(varargin{2:end});
             in.info(struct()) = @isstruct;
             in = +in;
-       
-            % --- Name
-            [~, tmp] = fileparts(this.Fullpath);
-            this.Name = tmp(2:end);
             
-            % --- Content
-            tmp = ML.FS.dir(this.Fullpath);
-            this.Content = {tmp(:).name};
+            % --- Name & extension
+            [~, this.Name, this.Extension] = fileparts(this.Fullpath);
             
             % --- Syntax
             if isprop(this, 'Package')

@@ -4,7 +4,7 @@ function print(this, varargin)
 %
 %   ML.CW.CLI/print(..., 'option', OPT) specifies options to modify the
 %   default printing behavior, like row/column headers or appearance. The
-%   possible options are the one accepted by <a href="matlab:help ML.Text.table;">ML.Text.table</a>.
+%   possible options are the one accepted by <a href="matlab:help ML.text.table;">ML.text.table</a>.
 %
 %   See also ML.CW.CLI, ML.CW.CLI/text, ML.CW.CLI/input, ML.CW.CLI/select, ML.CW.CLI/action
 %
@@ -112,7 +112,7 @@ while true
     clc
     if ~isempty(this.title), ML.CW.line(this.title); end
     if ~isempty(this.desc), ML.CW.print(['\n' this.desc '\n\n']); end
-    ML.Text.table(T, varargin{:});
+    ML.text.table(T, varargin{:});
     
     % --- Stop here in CW mode
     if this.hlmode, break; end

@@ -67,7 +67,7 @@ if isprop(this, 'Package')
     Prop{end,2} = [this.slnk(this.Package) '\n'];
 end
 
-ML.Text.table(Prop, 'style', 'compact', 'border', 'none');
+ML.text.table(Prop, 'style', 'compact', 'border', 'none');
 
 % --- Properties and methods ----------------------------------------------
 
@@ -150,7 +150,7 @@ if this.isclassdef
     
     T = [Paxs Prop Maxs Meth];
     
-    ML.Text.table(T, 'style', 'compact', 'border', 'none', ...
+    ML.text.table(T, 'style', 'compact', 'border', 'none', ...
         'col_headers', {'' 'Properties' '' 'Methods'});
     
 end

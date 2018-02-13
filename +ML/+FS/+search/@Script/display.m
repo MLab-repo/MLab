@@ -24,4 +24,4 @@ if isprop(this, 'Package')
     Prop{end,2} = [this.slnk(pack.Fullpath, this.Package) '\n'];
 end
 
-ML.Text.table(Prop, 'style', 'compact', 'border', 'none');
+ML.text.table(Prop, 'style', 'compact', 'border', 'none');

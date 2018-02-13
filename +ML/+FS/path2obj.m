@@ -9,7 +9,7 @@ function out = path2obj(varargin)
 
 in = ML.Input;
 in.path = @ischar;
-in = +in;
+in = in.process;
 
 % --- Definitions ---------------------------------------------------------
 
@@ -145,25 +145,25 @@ end
 switch info.type
     
     case 'Function'
-        out = ML.FS.Search.Function(in.path, 'info', info);
+        out = ML.FS.search.Function(in.path, 'info', info);
         
     case 'Script'
-        out = ML.FS.Search.Script(in.path, 'info', info);
+        out = ML.FS.search.Script(in.path, 'info', info);
         
     case 'Package'
-        out = ML.FS.Search.Package(in.path, 'info', info);
+        out = ML.FS.search.Package(in.path, 'info', info);
         
     case 'Class'
-        out = ML.FS.Search.Class(in.path, 'info', info);
+        out = ML.FS.search.Class(in.path, 'info', info);
         
     case 'Method'
-        out = ML.FS.Search.Method(in.path, 'info', info);
+        out = ML.FS.search.Method(in.path, 'info', info);
         
     case 'MLab'
-        out = ML.FS.Search.MLab();
+        out = ML.FS.search.MLab();
         
     case 'Plugin'
-        out = ML.FS.Search.Plugin(in.path, 'info', info);
+        out = ML.FS.search.Plugin(in.path, 'info', info);
         
     otherwise
         warning('ML:FS:Search:UnknownType', 'Unknown type');

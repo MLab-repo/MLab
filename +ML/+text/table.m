@@ -1,25 +1,25 @@
 function out = table(varargin)
-% ML.Text.table Command-window text table
-%   ML.Text.table(C) displays the content of the cell C in a tabular form
+% ML.text.table Command-window text table
+%   ML.text.table(C) displays the content of the cell C in a tabular form
 %   in the command window. The elements of C can be strings, numbers
 %   (including boolean, NaN, Inf and all numeric types) or cells. For
 %   cells, a multi-line element is created, with one row per cell element.
 %   Rich text (<strong>, <a>) are gracefully handled.
 %
-%   ML.Text.table(..., 'row_headers', RH) adds row headers. The number of
+%   ML.text.table(..., 'row_headers', RH) adds row headers. The number of
 %   elements in RH have to match the first dimension of C. RH can contain a
 %   mix of strings and numbers.
 %
-%   ML.Text.table(..., 'col_headers', CH) adds column headers. The number 
+%   ML.text.table(..., 'col_headers', CH) adds column headers. The number 
 %   of elements in CH have to match the first dimension of C. CH can 
 %   contain a mix of strings and numbers.
 %
-%   ML.Text.table(..., 'style', ST) specifies the table structure style. ST
+%   ML.text.table(..., 'style', ST) specifies the table structure style. ST
 %   is a string that can be:
 %       - 'normal' (default)
 %       - 'compact'
 %
-%   ML.Text.table(..., 'border', B) specifies the table border style. B is 
+%   ML.text.table(..., 'border', B) specifies the table border style. B is 
 %   a string that can be:
 %       - 'none'
 %       - 'ascii'
@@ -32,12 +32,12 @@ function out = table(varargin)
 %       - 'hdouble'
 %       - 'vdouble'
 %
-%   OUT = ML.Text.table(...) outputs the table as a string and does not
+%   OUT = ML.text.table(...) outputs the table as a string and does not
 %   display it in the command window.
 %
 %   See also
 %
-%   More on <a href="matlab:ML.doc('ML.Text.Table');">ML.doc</a>
+%   More on <a href="matlab:ML.doc('ML.text.Table');">ML.doc</a>
 
 % --- Input
 in = ML.Input;
@@ -56,13 +56,13 @@ if ~isempty(in.cont)
     
     % --- Checks
     if ~isempty(in.row_headers) && numel(in.row_headers)~=size(in.cont,1)
-        error('ML:Text:table:NumHeaderRows', ['The number of row headers (' ...
+        error('ML:text:table:NumHeaderRows', ['The number of row headers (' ...
             num2str(numel(in.row_headers)) ') is different from the number of rows (' ...
             num2str(size(in.cont,1)) ')']);
     end
     
     if ~isempty(in.col_headers) && numel(in.col_headers)~=size(in.cont,2)
-        error('ML:Text:table:NumHeaderCols', ['The number of column headers (' ...
+        error('ML:text:table:NumHeaderCols', ['The number of column headers (' ...
             num2str(numel(in.col_headers)) ') is different from the number of columns (' ...
             num2str(size(in.cont,2)) ')']);
     end
@@ -364,7 +364,7 @@ function out = fmt(in)
      elseif isnumeric(in)
          out = {num2str(in)};
      else
-         warning('ML:Text:table:UnsupportedClass', ['Unsupported element of class ' class(in) '.']);
+         warning('ML:text:table:UnsupportedClass', ['Unsupported element of class ' class(in) '.']);
          out = {};
      end
 

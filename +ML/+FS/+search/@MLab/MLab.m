@@ -1,4 +1,4 @@
-classdef MLab < ML.FS.Search.Root
+classdef MLab < ML.FS.search.Root
 
     properties (Access = public)
        
@@ -17,7 +17,7 @@ classdef MLab < ML.FS.Search.Root
             
             % --- Parent's constructor ------------------------------------
             
-            this = this@ML.FS.Search.Root(conf.path, 'info', struct('category', 'MLab'));
+            this = this@ML.FS.search.Root(conf.path, 'info', struct('category', 'MLab'));
             
             % --- Installed plugins
             tmp = ML.dir([conf.path 'Plugins']);

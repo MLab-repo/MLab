@@ -18,7 +18,7 @@ if nargout
     % --- Inputs
     in = ML.Input;
     in.cfile{'MLab'} = @ischar;
-    in = +in;
+    in = in.process;
 
     % --- Get configuration structure
     tmp = load([prefdir filesep  in.cfile '.mat']);

@@ -1,30 +1,29 @@
-classdef Class < ML.FS.Search.Root
+classdef Function < ML.FS.search.Root
 
     properties (Access = public)
        
         Syntax
-        isclassdef = true
+        Extension = ''
         
     end
     
     methods
         
         % --- Constructor -------------------------------------------------
-        function this = Class(varargin)
+        function this = Function(varargin)
             
             % --- Parent's constructor ------------------------------------
             
-            this = this@ML.FS.Search.Root(varargin{:});
+            this = this@ML.FS.search.Root(varargin{:});
             
             % --- Inputs --------------------------------------------------
 
             in = ML.Input(varargin{2:end});
             in.info(struct()) = @isstruct;
-            in = +in;
+            in = in.process;
             
-            % --- Name
-            [~, tmp] = fileparts(this.Fullpath);
-            this.Name = tmp(2:end);
+            % --- Name & extension
+            [~, this.Name, this.Extension] = fileparts(this.Fullpath);
             
             % --- Syntax
             if isprop(this, 'Package')
@@ -35,16 +34,6 @@ classdef Class < ML.FS.Search.Root
                 this.Syntax = this.Name;
             end
                   
-            % --- Parents
-            tmp = superclasses(this.Syntax);
-            if ~isempty(tmp)
-                addprop(this, 'Parents');
-                this.Parents = tmp;
-            end
-            
-            % --- Classdef ?
-            this.isclassdef = ~isempty(meta.class.fromName(this.Syntax));
-            
         end
         
     end

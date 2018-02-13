@@ -33,7 +33,7 @@ else
     end
     tmp = reshape(tmp, [in.numCols numRows])';
     
-    ML.Text.table(tmp, 'style', 'compact', 'border', 'none')
+    ML.text.table(tmp, 'style', 'compact', 'border', 'none')
 
 end
 

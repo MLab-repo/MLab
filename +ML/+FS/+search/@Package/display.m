@@ -38,7 +38,7 @@ if isprop(this, 'Package')
     Prop{end,2} = [this.slnk(pack.Fullpath, this.Package) '\n'];
 end
 
-ML.Text.table(Prop, 'style', 'compact', 'border', 'none');
+ML.text.table(Prop, 'style', 'compact', 'border', 'none');
 
 % Content
 
@@ -58,7 +58,7 @@ else
     tmp = reshape(tmp, [in.numCols numRows])';
     
     fprintf('\n');
-    ML.Text.table(tmp, 'style', 'compact', 'border', 'none')
+    ML.text.table(tmp, 'style', 'compact', 'border', 'none')
 
 end
 

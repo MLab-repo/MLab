@@ -29,7 +29,7 @@ in = ML.Input;
 in.req = @(x) ischar(x) || isa(x, 'function_handle');
 in.what{'all'} = @(x) ismember(x, {'first', 'all'});
 in.notfound('warning') = @(x) ismember(x, {'none', 'info', 'warning', 'error'});
-in = +in;
+in = in.process;
 
 % --- Checks --------------------------------------------------------------
 
@@ -210,10 +210,10 @@ else
                 
                 
                 % --- Table elemnts
-                T{i-1,1} = [ML.Doc.Root.slnk(out{i}.Fullpath, out{i}.Name) ' (' type ' / ' cat ')'];
+                T{i-1,1} = [ML.FS.search.Root.slnk(out{i}.Fullpath, out{i}.Name) ' (' type ' / ' cat ')'];
                 T{i-1,2} = ['~c[100 175 175]{' out{i}.Fullpath '}'];
             end
-            ML.Text.table(T, 'style', 'compact', 'border', 'none');
+            ML.text.table(T, 'style', 'compact', 'border', 'none');
         end
     end
     

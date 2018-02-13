@@ -6,8 +6,8 @@ function out = where(varargin)
 %
 %   OUT = ML.where(...) returns a n-by-3 cell of results. The first column
 %   contains the files' full names, the second contain the line numbers and
-%   the third the conent of the line. The results are not displayed, unless
-%   the 'Display' parameter is explicitely set to true.
+%   the third the line content. The results are not displayed, unless the 
+%   'Display' parameter is explicitely set to true.
 %
 %   ML.where(..., 'Extensions', EXT) specifies a list of file extensions to
 %   filter, in a cell of strings. The default value is m-files only.
@@ -143,7 +143,7 @@ end
 %! Version: 2.2
 %
 %! Revisions
-%   2.2     (2015/04/18): Changed ML.Text.line for ML.CW.line
+%   2.2     (2015/04/18): Changed ML.text.line for ML.CW.line
 %   2.1     (2015/04/06): Handled empty results, corrected the ':' bug in
 %               the Unix version, trimmed grep results, handled
 %               non-existant directory, added the 'MLab' shortcut.

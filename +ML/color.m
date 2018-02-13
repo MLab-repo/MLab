@@ -296,7 +296,7 @@ switch mode
                             tfun(num2str(HTML{i,2}(3)*255))];
                         
                     end
-                    ML.Text.table(T, 'style', 'compact');
+                    ML.text.table(T, 'style', 'compact');
                     
                 end
                 
@@ -315,7 +315,7 @@ switch mode
                             tfun(num2str(SHORT{i,2}(3)*255))];
                         
                     end
-                    ML.Text.table(T, 'style', 'compact');
+                    ML.text.table(T, 'style', 'compact');
                     
                 end
         end
