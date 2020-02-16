@@ -1,5 +1,5 @@
 function out = failsafe_shortcut(code)
-%ML.Config.failsafe_shortcut Failsafe code for shortcuts.
+%ML.config.failsafe_shortcut Failsafe code for shortcuts.
 %
 %   Note: This function is designed for internal MLab use, a regular user
 %   should not have to call it. If you have questions about this program,
